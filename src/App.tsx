@@ -6,7 +6,6 @@ import { GameState } from "./types/GameState";
 import update from "immutability-helper";
 import { scoreWord } from "./scoreWord";
 import { default as possibleTargetWords } from "./data/possible_target_words.json";
-import { default as guessableWords } from "./data/guessable_words.json";
 import { chain } from "@anoop901/js-util";
 import { allMatch } from "@anoop901/js-util/iterables";
 import { GuessForm } from "./GuessForm";
