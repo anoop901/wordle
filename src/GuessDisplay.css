@@ -1,24 +1,25 @@
-.guess {
+.GuessDisplay .guess {
   display: flex;
   flex-direction: row;
   text-transform: uppercase;
 }
 
-.letter {
-  width: 30px;
+.GuessDisplay .letter {
+  width: 56px;
   padding: 5px 0;
   margin: 2px;
   text-align: center;
+  font-size: 40px;
 }
 
-.letter-correct {
+.GuessDisplay .letter-correct {
   background-color: lightgreen;
 }
 
-.letter-misplaced {
+.GuessDisplay .letter-misplaced {
   background-color: yellow;
 }
 
-.letter-absent {
+.GuessDisplay .letter-absent {
   background-color: lightgray;
 }

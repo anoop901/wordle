@@ -5,7 +5,7 @@ import "./GuessDisplay.css";
 
 export const GuessDisplay = ({ gameState }: { gameState: GameState }) => {
   return (
-    <div>
+    <div className="GuessDisplay">
       {gameState.history.map(({ guess, result }, guessIndex) => (
         <div className="guess" key={guessIndex}>
           {chain(zip(guess, result))
