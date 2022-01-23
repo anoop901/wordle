@@ -5,7 +5,13 @@ import { HistoryItem } from "./types/HistoryItem";
 import "./LettersDisplay.css";
 import classNames from "classnames";
 
-export const LettersDisplay = ({ history }: { history: HistoryItem[] }) => {
+export const LettersDisplay = ({
+  history,
+  onLetterClick,
+}: {
+  history: HistoryItem[];
+  onLetterClick: (letter: string) => void;
+}) => {
   const guesses = history.flatMap((historyItem) =>
     chain(zip(historyItem.guess, historyItem.result))
       .then(
@@ -39,6 +45,9 @@ export const LettersDisplay = ({ history }: { history: HistoryItem[] }) => {
             "letter-misplaced": guessedLettersMisplaced.has(letter),
             "letter-unguessed": !guessedLetters.has(letter),
           })}
+          onClick={() => {
+            onLetterClick(letter);
+          }}
         >
           {letter}
         </div>

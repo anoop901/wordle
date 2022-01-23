@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   justify-content: center;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .LetterDisplay .letter {

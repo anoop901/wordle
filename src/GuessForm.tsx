@@ -3,8 +3,15 @@ import { WORD_LENGTH } from "./constants";
 import { default as guessableWords } from "./data/guessable_words.json";
 import "./GuessForm.css";
 
-export function GuessForm({ onGuess }: { onGuess: (guess: string) => void }) {
-  const [guess, setGuess] = useState("");
+export function GuessForm({
+  guess,
+  setGuess,
+  onGuess,
+}: {
+  guess: string;
+  setGuess: (guess: string) => void;
+  onGuess: (guess: string) => void;
+}) {
   return (
     <form
       className="GuessForm"

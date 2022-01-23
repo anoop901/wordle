@@ -24,6 +24,7 @@ function App() {
     target,
     finished: false,
   });
+  const [guess, setGuess] = useState("");
 
   const handleGuess = (guess: string) => {
     const result = scoreWord(guess, gameState.target);
@@ -42,13 +43,18 @@ function App() {
   return (
     <div className="App">
       <GuessDisplay gameState={gameState} />
-      {!gameState.finished && <GuessForm onGuess={handleGuess} />}
+      {!gameState.finished && (
+        <GuessForm guess={guess} setGuess={setGuess} onGuess={handleGuess} />
+      )}
       {gameState.finished && (
         <div>
           Congrats, you guessed the word in {gameState.history.length} guesses!
         </div>
       )}
-      <LettersDisplay history={gameState.history} />
+      <LettersDisplay
+        history={gameState.history}
+        onLetterClick={(letter) => setGuess(guess + letter)}
+      />
     </div>
   );
 }
