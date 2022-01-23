@@ -12,17 +12,17 @@ import { allMatch } from "@anoop901/js-util/iterables";
 import { GuessForm } from "./GuessForm";
 
 function App() {
-  const getTargetWord = useCallback(() => {
-    const targetWord =
+  const target = useCallback(
+    () =>
       possibleTargetWords[
         Math.floor(Math.random() * possibleTargetWords.length)
-      ];
-    return targetWord;
-  }, []);
+      ],
+    []
+  )();
 
   const [gameState, setGameState] = useState<GameState>({
     history: [],
-    target: getTargetWord(),
+    target,
     finished: false,
   });
 
@@ -33,19 +33,9 @@ function App() {
 
   const handleGuess = (guess: string) => {
     const result = scoreWord(guess, gameState.target);
-    if (!guessableWords.includes(guess)) {
-      return;
-    }
     setGameState(
       update(gameState, {
-        history: {
-          $push: [
-            {
-              guess: guess,
-              result,
-            },
-          ],
-        },
+        history: { $push: [{ guess, result }] },
         finished: {
           $set: chain(result)
             .then(allMatch((x) => x === "correct"))
@@ -58,12 +48,11 @@ function App() {
   return (
     <div className="App">
       <GuessDisplay gameState={gameState} />
-      {gameState.finished ? (
+      {!gameState.finished && <GuessForm onGuess={handleGuess} />}
+      {gameState.finished && (
         <div>
           Congrats, you guessed the word in {gameState.history.length} guesses!
         </div>
-      ) : (
-        <GuessForm onGuess={handleGuess} />
       )}
       <div>unguessed letters: {unguessedLetters}</div>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { WORD_LENGTH } from "./constants";
+import { default as guessableWords } from "./data/guessable_words.json";
 
 export function GuessForm({ onGuess }: { onGuess: (guess: string) => void }) {
   const [guess, setGuess] = useState("");
@@ -7,6 +8,9 @@ export function GuessForm({ onGuess }: { onGuess: (guess: string) => void }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        if (!guessableWords.includes(guess)) {
+          return;
+        }
         onGuess(guess);
         setGuess("");
       }}
