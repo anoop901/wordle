@@ -1,0 +1,32 @@
+.LetterDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.LetterDisplay .letter {
+  width: 32px;
+  padding: 5px 0;
+  margin: 2px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 5px;
+}
+
+.LetterDisplay .letter-absent {
+  background-color: lightgray;
+}
+
+.LetterDisplay .letter-correct {
+  background-color: lightgreen;
+}
+
+.LetterDisplay .letter-misplaced {
+  background-color: yellow;
+}
+
+.LetterDisplay .letter-unguessed {
+  border: 2px solid gray;
+}
