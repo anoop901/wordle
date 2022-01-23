@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React, { useCallback, useState } from "react";
 import "./App.css";
 import { ALL_LETTERS, WORD_LENGTH } from "./constants";
 import { GuessDisplay } from "./GuessDisplay";
@@ -12,20 +11,19 @@ import { chain } from "@anoop901/js-util";
 import { allMatch } from "@anoop901/js-util/iterables";
 
 function App() {
-  const [gameState, setGameState] = useState<GameState>({
-    history: [],
-    target: "",
-    finished: false,
-  });
-
-  useEffect(() => {
+  const getTargetWord = useCallback(() => {
     const targetWord =
       possibleTargetWords[
         Math.floor(Math.random() * possibleTargetWords.length)
       ];
-    console.log(targetWord);
-    setGameState(update(gameState, { target: { $set: targetWord } }));
+    return targetWord;
   }, []);
+
+  const [gameState, setGameState] = useState<GameState>({
+    history: [],
+    target: getTargetWord(),
+    finished: false,
+  });
   const [nextGuess, setNextGuess] = useState<string>("");
 
   const guessedLetters = new Set(
