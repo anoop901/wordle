@@ -10,6 +10,7 @@
   margin: 2px;
   text-align: center;
   font-size: 40px;
+  border-radius: 5px;
 }
 
 .GuessDisplay .letter-correct {
