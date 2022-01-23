@@ -31,6 +31,31 @@ function App() {
   );
   const unguessedLetters = ALL_LETTERS.filter((x) => !guessedLetters.has(x));
 
+  const submitGuess = () => {
+    const result = scoreWord(nextGuess, gameState.target);
+    if (!guessableWords.includes(nextGuess)) {
+      return;
+    }
+    setGameState(
+      update(gameState, {
+        history: {
+          $push: [
+            {
+              guess: nextGuess,
+              result,
+            },
+          ],
+        },
+        finished: {
+          $set: chain(result)
+            .then(allMatch((x) => x === "correct"))
+            .end(),
+        },
+      })
+    );
+    setNextGuess("");
+  };
+
   return (
     <div className="App">
       <GuessDisplay gameState={gameState} />
@@ -42,28 +67,7 @@ function App() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            const result = scoreWord(nextGuess, gameState.target);
-            if (!guessableWords.includes(nextGuess)) {
-              return;
-            }
-            setGameState(
-              update(gameState, {
-                history: {
-                  $push: [
-                    {
-                      guess: nextGuess,
-                      result,
-                    },
-                  ],
-                },
-                finished: {
-                  $set: chain(result)
-                    .then(allMatch((x) => x === "correct"))
-                    .end(),
-                },
-              })
-            );
-            setNextGuess("");
+            submitGuess();
           }}
         >
           <input
