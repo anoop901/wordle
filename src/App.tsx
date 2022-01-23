@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import "./App.css";
-import { ALL_LETTERS, WORD_LENGTH } from "./constants";
+import { ALL_LETTERS } from "./constants";
 import { GuessDisplay } from "./GuessDisplay";
 import { GameState } from "./types/GameState";
 import update from "immutability-helper";
@@ -9,6 +9,7 @@ import { default as possibleTargetWords } from "./data/possible_target_words.jso
 import { default as guessableWords } from "./data/guessable_words.json";
 import { chain } from "@anoop901/js-util";
 import { allMatch } from "@anoop901/js-util/iterables";
+import { GuessForm } from "./GuessForm";
 
 function App() {
   const getTargetWord = useCallback(() => {
@@ -24,16 +25,15 @@ function App() {
     target: getTargetWord(),
     finished: false,
   });
-  const [nextGuess, setNextGuess] = useState<string>("");
 
   const guessedLetters = new Set(
     gameState.history.map((item) => item.guess).flatMap((guess) => [...guess])
   );
   const unguessedLetters = ALL_LETTERS.filter((x) => !guessedLetters.has(x));
 
-  const submitGuess = () => {
-    const result = scoreWord(nextGuess, gameState.target);
-    if (!guessableWords.includes(nextGuess)) {
+  const handleGuess = (guess: string) => {
+    const result = scoreWord(guess, gameState.target);
+    if (!guessableWords.includes(guess)) {
       return;
     }
     setGameState(
@@ -41,7 +41,7 @@ function App() {
         history: {
           $push: [
             {
-              guess: nextGuess,
+              guess: guess,
               result,
             },
           ],
@@ -53,7 +53,6 @@ function App() {
         },
       })
     );
-    setNextGuess("");
   };
 
   return (
@@ -64,25 +63,7 @@ function App() {
           Congrats, you guessed the word in {gameState.history.length} guesses!
         </div>
       ) : (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            submitGuess();
-          }}
-        >
-          <input
-            type="text"
-            value={nextGuess}
-            required
-            minLength={WORD_LENGTH}
-            maxLength={WORD_LENGTH}
-            style={{ textTransform: "uppercase" }}
-            onChange={(e) => {
-              setNextGuess(e.currentTarget.value.toLowerCase());
-            }}
-          />
-          <button type="submit">Submit</button>
-        </form>
+        <GuessForm onGuess={handleGuess} />
       )}
       <div>unguessed letters: {unguessedLetters}</div>
     </div>
