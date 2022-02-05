@@ -1,7 +1,7 @@
 <div
   *ngFor="let letterWithStatus of lettersWithStatuses"
   [class]="['letter', 'letter-' + letterWithStatus.status]"
+  (click)="addLetterToGuess.emit(letterWithStatus.letter)"
 >
-  <!-- TODO: add the letter to the guess when it's clicked -->
   {{ letterWithStatus.letter }}
 </div>

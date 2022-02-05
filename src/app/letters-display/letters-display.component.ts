@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import chain from '@anoop901/js-util/chain';
 import map from '@anoop901/js-util/iterables/map';
 import toArray from '@anoop901/js-util/iterables/toArray';
@@ -12,6 +12,7 @@ import { HistoryItem } from 'src/types/HistoryItem';
 })
 export class LettersDisplayComponent implements OnInit {
   @Input() history!: HistoryItem[];
+  @Output() addLetterToGuess = new EventEmitter<string>();
   ALL_LETTERS = [...'abcdefghijklmnopqrstuvwxyz'];
 
   get lettersWithStatuses() {

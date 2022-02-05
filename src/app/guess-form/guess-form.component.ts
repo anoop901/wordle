@@ -17,6 +17,14 @@ export class GuessFormComponent implements OnInit {
   });
   @Output() onGuess = new EventEmitter<string>();
 
+  get wordControl() {
+    return this.guessFormGroup.get('word')!;
+  }
+
+  addLetterToGuess(letter: string) {
+    this.wordControl.setValue((this.wordControl.value || '') + letter);
+  }
+
   onSubmit() {
     this.onGuess.emit(this.guessFormGroup.value.word.toLowerCase());
     this.guessFormGroup.reset();
