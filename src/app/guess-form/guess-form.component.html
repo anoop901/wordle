@@ -1,10 +1,5 @@
-<!-- TODO: Validate that the guess exists, is exactly 5 letters, and is in guessable_words.json. -->
-<!-- TODO: Clear the form on submit. -->
-<!-- TODO: Normalize the guess to lowercase before emitting it. -->
-<form
-  [formGroup]="guessFormGroup"
-  (ngSubmit)="this.onGuess.emit(this.guessFormGroup.value.word)"
->
+<!-- TODO: Validate that is in guessable_words.json. -->
+<form [formGroup]="guessFormGroup" (ngSubmit)="onSubmit()">
   <input type="text" formControlName="word" />
-  <button type="submit">Submit</button>
+  <button type="submit" [disabled]="!guessFormGroup.valid">Submit</button>
 </form>
