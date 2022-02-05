@@ -1,0 +1,26 @@
+.guess {
+  display: flex;
+  flex-direction: row;
+  text-transform: uppercase;
+}
+
+.letter {
+  width: 56px;
+  padding: 5px 0;
+  margin: 2px;
+  text-align: center;
+  font-size: 40px;
+  border-radius: 5px;
+}
+
+.letter-correct {
+  background-color: lightgreen;
+}
+
+.letter-misplaced {
+  background-color: yellow;
+}
+
+.letter-absent {
+  background-color: lightgray;
+}
