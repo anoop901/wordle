@@ -1,5 +1,9 @@
-<!-- TODO: Validate that is in guessable_words.json. -->
 <form [formGroup]="guessFormGroup" (ngSubmit)="onSubmit()">
   <input type="text" formControlName="word" />
-  <button type="submit" [disabled]="!guessFormGroup.valid">Submit</button>
+  <button
+    type="submit"
+    [disabled]="!guessFormGroup.valid || guessableWords.size === 0"
+  >
+    Submit
+  </button>
 </form>

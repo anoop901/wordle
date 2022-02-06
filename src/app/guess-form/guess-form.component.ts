@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -16,6 +17,7 @@ export class GuessFormComponent implements OnInit {
     ]),
   });
   @Output() onGuess = new EventEmitter<string>();
+  guessableWords = new Set<string>();
 
   get wordControl() {
     return this.guessFormGroup.get('word')!;
@@ -26,11 +28,20 @@ export class GuessFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.onGuess.emit(this.guessFormGroup.value.word.toLowerCase());
-    this.guessFormGroup.reset();
+    const guessedWord = this.guessFormGroup.value.word.toLowerCase();
+    if (this.guessableWords.has(guessedWord)) {
+      this.onGuess.emit(guessedWord);
+      this.guessFormGroup.reset();
+    }
   }
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.http
+      .get<string[]>('assets/guessable_words.json')
+      .subscribe((guessableWords) => {
+        this.guessableWords = new Set(guessableWords);
+      });
+  }
 }
