@@ -1,0 +1,9 @@
+<form [formGroup]="guessFormGroup" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="word" />
+  <button
+    type="submit"
+    [disabled]="!guessFormGroup.valid || guessableWords.size === 0"
+  >
+    Submit
+  </button>
+</form>

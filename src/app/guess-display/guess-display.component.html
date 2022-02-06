@@ -1,0 +1,13 @@
+<div *ngFor="let historyItem of history" class="guess">
+  <div
+    *ngFor="
+      let letterAndResult of zippedLettersAndResults(
+        historyItem.guess,
+        historyItem.result
+      )
+    "
+    class="letter letter-{{ letterAndResult.letterResult }}"
+  >
+    {{ letterAndResult.letter }}
+  </div>
+</div>
