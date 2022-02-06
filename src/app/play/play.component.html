@@ -1,13 +1,16 @@
-<app-guess-display [history]="history"></app-guess-display>
-<app-guess-form
-  #guessForm
-  *ngIf="!finished"
-  (onGuess)="onGuess($event)"
-></app-guess-form>
-<div *ngIf="finished">
-  Congrats, you guessed the word in {{ history.length }} guesses!
-</div>
-<app-letters-display
-  (addLetterToGuess)="guessForm.addLetterToGuess($event)"
-  [history]="history"
-></app-letters-display>
+<ng-container *ngIf="loaded">
+  <app-guess-display [history]="history"></app-guess-display>
+  <app-guess-form
+    #guessForm
+    *ngIf="!finished"
+    (onGuess)="onGuess($event)"
+  ></app-guess-form>
+  <div *ngIf="finished">
+    Congrats, you guessed the word in {{ history.length }} guesses!
+  </div>
+  <app-letters-display
+    (addLetterToGuess)="guessForm.addLetterToGuess($event)"
+    [history]="history"
+  ></app-letters-display>
+</ng-container>
+<div *ngIf="!loaded">Loading...</div>
